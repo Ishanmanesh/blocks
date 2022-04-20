@@ -6,90 +6,47 @@ const Body = Matter.Body;
 
 let engine;
 let world;
-var angle=60;
-
+var ball;
 var ground;
-var b1,b2,b3,b4;
-var top_wall;
-var ball,rock;
+var wedge;
+var angle=60;
+var poly;
+var boxes=[];
 
-var btn1;
-var btn2;
 function setup() {
   createCanvas(400,400);
 
   engine = Engine.create();
   world = engine.world;
-  
-   
-  var ground_options ={
-    isStatic: true
+  var option={
+    isStatic:true
   };
- 
-  var ball_options = {
-    //write a code to set value of restitution such that:
-//Ball (white circle) bounces more when it hits the bottom.
-
-restitution: 0.75,
-    frictionAir:0.02
-
-
-  }
-
-  var rock_options = {
-   // write a code to set value of restitution such that:
-   // Rock (Red Circle) bounces less when it hits the bottom.
-   
-   restitution: 0.105,
-   frictionAir:0.02
-
-
-  }
-   
-  btn2 = createImg('up.png');
-  btn2.position(350,30);
-  btn2.size(50,50);
-  btn2.mouseClicked(vForce);
-  
-  ball = Bodies.circle(100,10,20,ball_options);
-  World.add(world,ball);
-  
-  rock = Bodies.circle(250,10,20,rock_options);
-  World.add(world,rock);
-
-  ground= Bodies.rectangle(200,390,400,20,ground_options);
-
-  World.add(world, ground);
- 
+  ground=Bodies.rectangle(100,300,400,20,option);
+  World.add(world,ground);
+  //box1 = new Box(200,100,10,10);
   
 
   rectMode(CENTER);
   ellipseMode(RADIUS);
 }
-
+function mousePressed(){
+  boxes.push(
+    
+    
+    new Box(mouseX,mouseY,50,50)
+    
+    
+    )
+}
 
 function draw() 
 {
   background(51);
+  rect(ground.position.x,ground.position.y,400,10);
   Engine.update(engine);
+ for(var i=0;i<boxes.length;i++) {
+ boxes[i].show();}
   
-rect(ground.position.x,ground.position.y,400,20);
-ellipse(ball.position.x,ball.position.y,20);
-push();
-fill("brown");
-ellipse(rock.position.x,rock.position.y,20);
-pop();
-}
-
-function vForce()
-{
- //write a code to move ball up when the button is clicked.
-
- Matter.Body.applyForce(ball,{x:0,y:0},{x:0,y:-1.05});
-
-}
-
-
   
-
+}
 
